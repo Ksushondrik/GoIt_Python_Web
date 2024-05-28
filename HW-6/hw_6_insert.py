@@ -5,7 +5,7 @@ from datetime import date
 from faker import Faker
 from psycopg2 import DatabaseError
 
-from create import create_connection
+from connect import create_connection
 
 
 logging.basicConfig(level=logging.INFO)
@@ -51,9 +51,10 @@ def insert_data(conn):
         '''Заповнюємо таблицю оцінок'''
         logging.info("Inserting table grades")
         for st in range(len(students)):
-            for sub in range(len(subjects)):
+            num_subjects = randint(1, len(subjects))
+            for sub in range(num_subjects):
                 for _ in range(20):
-                    c.execute("INSERT INTO grades(student_id, subject_id, grade, grade_date) VALUES (%s, %s, %s, %s)", (st + 1, sub + 1, randint(1, 100), fake.date_between(start_date=date(2020, 9, 1), end_date=date.today())))
+                    c.execute("INSERT INTO grades(student_id, subject_id, grade, grade_date) VALUES (%s, %s, %s, %s)", (st + 1, sub, randint(1, 100), fake.date_between(start_date=date(2020, 9, 1), end_date=date.today())))
         logging.info("Updated table grades")
 
         conn.commit()
