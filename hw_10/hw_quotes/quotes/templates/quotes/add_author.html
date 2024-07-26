@@ -1,0 +1,67 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+
+<h2>Add New Author</h2>
+<form action="{% url 'quotes:add_author' %}" method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <!-- Author Full Name selection field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_fullname">Full Name</label>
+            <input type="text" class="form-control" id="id_fullname" name="fullname" value="{{ form.fullname.value }}">
+            {% if form.fullname.errors %}
+            <div class="alert alert-danger">
+                {{ form.fullname.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Born Date selection field with date picker -->
+<div class="row">
+    <div class="form-group col-xs-12">
+        <label for="id_born_date">Born Date</label>
+        <input type="date" class="form-control" id="id_born_date" name="born_date" value="{{ form.born_date.value }}">
+        {% if form.born_date.errors %}
+        <div class="alert alert-danger">
+            {{ form.born_date.errors }}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+    <!-- Born Location selection field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_born_location">Born Location</label>
+            <input type="text" class="form-control" id="id_born_location" name="born_location"
+                   value="{{ form.born_location.value }}">
+            {% if form.born_location.errors %}
+            <div class="alert alert-danger">
+                {{ form.born_location.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Description selection field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_description">Description</label>
+            <textarea class="form-control" id="id_description"
+                      name="description">{{ form.description.value }}</textarea>
+            {% if form.description.errors %}
+            <div class="alert alert-danger">
+                {{ form.description.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Author</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<h2>Logout</h2>
+<form action="{% url 'users:logout' %}" method="post" accept-charset="utf-8">
+    {% csrf_token %}
+    <p>Are you sure you want to log out?</p>
+    <input type="submit" value="Logout" class="btn btn-primary">
+</form>
+{% endblock %}

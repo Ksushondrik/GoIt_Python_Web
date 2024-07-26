@@ -1,0 +1,66 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+
+<h2>Add New Quote</h2>
+<form method="post" action="">
+    {% csrf_token %}
+
+
+    <!-- Quote text field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_quote">Quote Text</label>
+            <textarea class="form-control" id="id_quote" name="quote">{{ form.quote.value }}</textarea>
+            {% if form.quote.errors %}
+            <div class="alert alert-danger">
+                {{ form.quote.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Author selection field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_author">Author</label>
+            <select class="form-control" id="id_author" name="author">
+                {% for choice in form.author.field.choices %}
+                <option value="{{ choice.0 }}" {% if choice.0|stringformat:"s" == form.author.value|stringformat:"s" %}selected{% endif %}>{{ choice.1 }}</option>
+                {% endfor %}
+            </select>
+            {% if form.author.errors %}
+            <div class="alert alert-danger">
+                {{ form.author.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Tags selection field -->
+    <div class="row">
+        <div class="form-group col-xs-12">
+            <label for="id_tags">Tags</label>
+            <div id="id_tags" style="max-height: 200px; overflow-y: auto;">
+                {% for tag in form.tags.field.queryset %}
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="tags" value="{{ tag.pk }}" {% if tag.pk|stringformat:"s" in form.tags.value|stringformat:"s" %}checked{% endif %}>
+                        {{ tag }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            {% if form.tags.errors %}
+            <div class="alert alert-danger">
+                {{ form.tags.errors }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Submit button -->
+    <input type="submit" value="Add Quote" class="btn btn-primary">
+</form>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+
+<h3>Viewing tag: <a href="/tag/thinking/page/1/">{{ tag.name }}</a></h3>
+
+<div class="row">
+    <div class="col-md-8">
+
+        {% for quote in quotes %}
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">{{ quote.quote }}</span>
+            <span>by <small class="author" itemprop="author">{{ quote.author.fullname }}</small>
+        <a href="{% url 'quotes:author_detail' quote.author.fullname %}">(about)</a>
+        </span>
+            <div class="tags">
+                Tags:
+                <meta class="keywords" itemprop="keywords"
+                      content="{% for tag in quote.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+
+                {% for tag in quote.tags.all %}
+                <a class="tag" href="{% url 'quotes:tag_detail' tag.name %}">{{ tag.name }}</a>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        {% empty %}
+        <li>No quotes for this tag.</li>
+
+        {% endfor %}
+        <nav>
+            <ul class="pager">
+
+
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+{% endblock %}
