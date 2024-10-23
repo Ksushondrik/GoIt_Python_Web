@@ -27,9 +27,7 @@ class Settings(BaseSettings):
             raise ValueError("Invalid algorithm. Algorithm must be HS256 or HS512")
         return value
 
-    model_config = ConfigDict(
-        extra="ignore", env_file=".env", env_file_encoding="utf-8"
-    )  # noqa
+    model_config = ConfigDict(extra="ignore", env_file=".env", env_file_encoding="utf-8")  # noqa
 
     model_config = ConfigDict(extra='ignore', env_file=".env", env_file_encoding="utf-8")   # noqa
 
